@@ -1,4 +1,4 @@
--- Merge functions
+{-# LANGUAGE CPP #-}
 
 module ProbabilityDistribution.Data.Function where
 
@@ -8,9 +8,36 @@ import ProbabilityDistribution.Data
 import qualified Data.IntMap as IM
 import qualified Data.Map as M
 
+#ifdef DEBUG
+import Control.Exception
+#endif
+
 import Debug.Trace
 
-mergeDistribution :: (Show a) => Distribution a -> Distribution a -> Distribution a
+-- Initialize functions
+
+generateDPD :: [(Int,a)] -> Distribution a
+generateDPD kvList = DPD bound (generateDPDSub 0 kvList IM.empty)
+  where
+    bound = sum $ map fst kvList
+    generateDPDSub _ [] dist = dist
+    generateDPDSub b ((k,v):rest) dist =
+      generateDPDSub (b+k) rest (IM.insert b v dist)
+
+generateCPD :: [(Double,a)] -> Distribution a
+generateCPD kvList = CPD $ generateCPDSub 0 kvList M.empty
+  where
+    total = sum $ map fst kvList
+    generateCPDSub _ [] dist = dist
+    generateCPDSub c ((k,v):rest) dist =
+      #ifdef DEBUG
+      assert (c/total <= 1) $
+      #endif
+        generateCPDSub (c+k) rest (M.insert (c/total) v dist)
+
+-- Merge functions
+
+mergeDistribution :: Distribution a -> Distribution a -> Distribution a
 mergeDistribution (SD a) (SD b) = trace "[Warn] mergeDistribution: Merge two singletones"
                                   $ DPD 2 $ IM.fromList [(0,a),(1,b)]
 
@@ -25,7 +52,7 @@ mergeDistribution cpdA@(CPD _) cpdB@(CPD _)
 
 mergeDistribution _ _ = error "[ERROR] mergeDistribution: Each type of distribution are different"
 
-mergeCPD (CPD dA) (CPD dB) rA rB = trace (show newDA ++ "\n" ++ show newDB) $ CPD newD
+mergeCPD (CPD dA) (CPD dB) rA rB = CPD newD
   where
     rA' = rA / (rA + rB)
     rB' = rB / (rA + rB)
