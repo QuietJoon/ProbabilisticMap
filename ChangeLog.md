@@ -1,4 +1,4 @@
-# Revision history for ProbabilityDistribution
+# Revision history for ProbabilisticMap
 
 ## 0.1.2.0  -- 2017/01/18
 

@@ -1,18 +1,56 @@
+{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE CPP #-}
 
-module ProbabilityDistribution.Data.Function where
+module Data.ProbabilisticMap where
 
 
-import ProbabilityDistribution.Data
-
+import Data.IntMap (IntMap)
 import qualified Data.IntMap as IM
+import Data.Map (Map)
 import qualified Data.Map as M
 
+import Text.Printf
+
 #ifdef DEBUG
+import Debug.Trace
 import Control.Exception
 #endif
 
-import Debug.Trace
+
+data Distribution a
+  = SD -- fixed, singleton
+    { dSingleton :: a
+    }
+  | DPD -- Discrete probability Distribution
+    { discBound :: {-# UNPACK #-} !Int
+    , discDist :: IM.IntMap a
+    }
+  | CPD -- Continual probability Distribution
+    { contDist :: M.Map Double a
+    }
+
+
+-- Show Instances
+
+instance Show a => Show (Distribution a) where
+  show (SD a)   = "SingD: " ++ show a
+  show DPD {..} = "DiscPD(" ++ show discBound ++ "): " ++ showDisc discBound discDist
+  show CPD {..} = "ContPD: " ++ showCont contDist
+
+showDisc :: Show a => Int -> IntMap a -> String
+showDisc discBound discDist = showDiscSub $ IM.toList discDist
+  where
+    showDiscSub [] = []
+    showDiscSub (~(x,a):[]) = "[" ++ show (discBound - x) ++ "/" ++ show discBound ++ "]: " ++ show a
+    showDiscSub ~(~(xk,a):y@(~(yk,_)):zs) = "[" ++ show (yk-xk) ++ "/" ++ show discBound ++ "]: " ++ show a ++ "\t" ++ showDiscSub (y:zs)
+
+showCont :: Show a => Map Double a -> String
+showCont discCont = showContSub $ M.toList discCont
+  where
+    showContSub [] = []
+    showContSub (~(x,a):[]) = "[" ++ printf "%.4f" (1-x) ++ "]: " ++ show a
+    showContSub ~(~(xk,a):y@(~(yk,_)):zs) = "[" ++ printf "%.4f" (yk-xk) ++ "]: " ++ show a ++ "\t" ++ showContSub (y:zs)
+
 
 -- Initialize functions
 
@@ -35,11 +73,15 @@ generateCPD kvList = CPD $ generateCPDSub 0 kvList M.empty
       #endif
         generateCPDSub (c+k) rest (M.insert (c/total) v dist)
 
+
 -- Merge functions
 
 mergeDistribution :: Distribution a -> Distribution a -> Distribution a
-mergeDistribution (SD a) (SD b) = trace "[Warn] mergeDistribution: Merge two singletones"
-                                  $ DPD 2 $ IM.fromList [(0,a),(1,b)]
+mergeDistribution (SD a) (SD b) =
+  #ifdef DEBUG
+  trace "[Warn] mergeDistribution: Merge two singletones" $
+  #endif
+    DPD 2 $ IM.fromList [(0,a),(1,b)]
 
 mergeDistribution (DPD bA dA) (DPD bB dB)
   = DPD (bA + bB) newDist

@@ -1,8 +1,8 @@
-name:                   ProbabilityDistribution
-version:                0.1.2.0
-synopsis:               Simple and Customizable Probability Distribution
+name:                   ProbabilisticMap
+version:                0.2.0.0
+synopsis:               Simple and Customizable Probabilistic Map
 -- description:            
-homepage:               quietjoon.net
+homepage:               dev.quietjoon.net
 license:                BSD3
 license-file:           LICENSE
 author:                 YongJoon Joe
@@ -10,13 +10,12 @@ maintainer:             developer@quietjoon.net
 -- copyright:              
 category:               Data
 build-type:             Simple
-extra-source-files:     ChangeLog.md
+extra-source-files:     ChangeLog.md README.md
 cabal-version:          >=1.10
 
 library
-  exposed-modules:      ProbabilityDistribution.Data,
-                        ProbabilityDistribution.Data.Function,
-                        ProbabilityDistribution.Function
+  exposed-modules:      Data.ProbabilisticMap,
+                        Data.ProbabilisticMap.Function
   -- other-modules:        
   other-extensions:     RecordWildCards,
                         CPP,

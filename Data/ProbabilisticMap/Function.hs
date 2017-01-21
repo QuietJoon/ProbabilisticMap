@@ -1,9 +1,9 @@
 {-# LANGUAGE CPP #-}
 
-module ProbabilityDistribution.Function where
+module Data.ProbabilisticMap.Function where
 
 
-import ProbabilityDistribution.Data
+import Data.ProbabilisticMap
 
 import Data.IntMap (IntMap)
 import qualified Data.IntMap as IM

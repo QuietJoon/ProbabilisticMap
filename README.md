@@ -1,5 +1,5 @@
-Probability Distribution
+ProbabilisticMap
 ====
 
-`Probability Distribution` is provisional name.
+`ProbabilisticMap` is provisional name.
 SHOULD BE RENAMED!
