@@ -1,5 +1,13 @@
 # Revision history for ProbabilisticMap
 
+## 0.2.0.1  -- 2017/01/21
+
+* Simplify random dependencies
+
+## 0.2.0.0  -- 2017/01/21
+
+* Refactoring modules
+
 ## 0.1.2.0  -- 2017/01/18
 
 * Add initialize/generate functions

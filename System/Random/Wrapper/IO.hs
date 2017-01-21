@@ -5,7 +5,7 @@ module System.Random.Wrapper.IO (
   ) where
 
 #ifdef SFMT
-import System.Random.Wrapper.IO.SFMT as WrapperIO
+import System.Random.SFMT as WrapperIO
 #else
-import System.Random.Wrapper.IO.MWC  as WrapperIO
+import System.Random.MWC  as WrapperIO
 #endif
