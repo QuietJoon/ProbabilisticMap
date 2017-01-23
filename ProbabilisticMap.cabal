@@ -2,12 +2,13 @@ name:                   ProbabilisticMap
 version:                0.2.0.1
 synopsis:               Simple and Customizable Probabilistic Map
 -- description:            
-homepage:               dev.quietjoon.net
+homepage:               http://dev.quietjoon.net/projects/ProbabilisticMap.html
+bug-reports:            https://github.com/QuietJoon/ProbabilisticMap/issues
 license:                BSD3
 license-file:           LICENSE
 author:                 YongJoon Joe
 maintainer:             developer@quietjoon.net
--- copyright:              
+copyright:              2016-2017 YongJoon Joe
 category:               Data, Random
 build-type:             Simple
 extra-source-files:     ChangeLog.md README.md
@@ -28,3 +29,7 @@ library
                       -- , time >=1.6
   -- hs-source-dirs:       
   default-language:     Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/QuietJoon/ProbabilisticMap.git
