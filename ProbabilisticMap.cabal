@@ -6,7 +6,7 @@ bug-reports:            https://github.com/QuietJoon/ProbabilisticMap/issues
 license:                BSD3
 license-file:           LICENSE
 author:                 YongJoon Joe
-maintainer:             developer@quietjoon.net
+maintainer:             developer+ProbMap@quietjoon.net
 copyright:              2016-2017 YongJoon Joe
 category:               Data, Random
 build-type:             Simple
