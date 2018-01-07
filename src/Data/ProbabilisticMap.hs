@@ -68,9 +68,9 @@ generateCPD kvList = CPD $ generateCPDSub 0 kvList M.empty
     total = sum $ map fst kvList
     generateCPDSub _ [] dist = dist
     generateCPDSub c ((k,v):rest) dist =
-      #ifdef DEBUG
+#ifdef DEBUG
       assert (c/total <= 1) $
-      #endif
+#endif
         generateCPDSub (c+k) rest (M.insert (c/total) v dist)
 
 
@@ -78,9 +78,9 @@ generateCPD kvList = CPD $ generateCPDSub 0 kvList M.empty
 
 mergeDistribution :: Distribution a -> Distribution a -> Distribution a
 mergeDistribution (SD a) (SD b) =
-  #ifdef DEBUG
+#ifdef DEBUG
   trace "[Warn] mergeDistribution: Merge two singletones" $
-  #endif
+#endif
     DPD 2 $ IM.fromList [(0,a),(1,b)]
 
 mergeDistribution (DPD bA dA) (DPD bB dB)

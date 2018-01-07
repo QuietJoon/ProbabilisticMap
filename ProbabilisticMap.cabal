@@ -1,5 +1,5 @@
 name:                   ProbabilisticMap
-version:                0.2.0.1
+version:                0.2.0.2
 synopsis:               Simple and Customizable Probabilistic Map
 homepage:               http://dev.quietjoon.net/projects/ProbabilisticMap.html
 bug-reports:            https://github.com/QuietJoon/ProbabilisticMap/issues
@@ -16,6 +16,7 @@ cabal-version:          >=1.10
 library
   exposed-modules:      Data.ProbabilisticMap,
                         Data.ProbabilisticMap.Function
+  other-modules:        System.Random.Wrapper.IO
   other-extensions:     RecordWildCards
                       , CPP
   build-depends:        base >=4.0 && <5
